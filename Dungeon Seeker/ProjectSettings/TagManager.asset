@@ -9,6 +9,9 @@ TagManager:
   tags:
   - Ground
   - Penghalang
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   layers:
   - Default

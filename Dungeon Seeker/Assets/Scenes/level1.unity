@@ -9854,7 +9854,10 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 --- !u!1 &1053500356
 GameObject:
   m_ObjectHideFlags: 0
@@ -10190,6 +10193,9 @@ MonoBehaviour:
   - {fileID: 2142812457}
   - {fileID: 1053500356}
   panelGameOver: {fileID: 0}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!1 &1186823991
 GameObject:
@@ -10749,4 +10755,7 @@ SceneRoots:
   - {fileID: 1144697082}
   - {fileID: 2138598081}
   - {fileID: 2085753514}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

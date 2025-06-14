@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 <<<<<<<< Updated upstream:Dungeon Seeker/Assets/Karakter.meta
 guid: 5e471a0b31b52f24fa05471a5f1edfc5
 ========
@@ -7,6 +8,18 @@ guid: 7c698ff814ce0e44b92c242a6da5211c
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
+=======
+<<<<<<<< Updated upstream:Dungeon Seeker/Assets/Animation/Character/dodge.anim.meta
+guid: b3c63415b13a2394f9a7f2e578b99101
+NativeFormatImporter:
+========
+guid: 7c698ff814ce0e44b92c242a6da5211c
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> Stashed changes:Dungeon Seeker/Assets/Script/Character.meta
+  externalObjects: {}
+  mainObjectFileID: 7400000
+>>>>>>> Stashed changes
   userData: 
   assetBundleName: 
   assetBundleVariant: 
