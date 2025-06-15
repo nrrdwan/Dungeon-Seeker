@@ -34,25 +34,25 @@ public class Lempar : MonoBehaviour
     }
 
     public void Throw()
-{
-    if (isThrown) return; // Cegah lempar ulang jika belum selesai
+    {
+        if (isThrown) return; // Cegah lempar ulang jika belum selesai
 
-    transform.position = player.position;
-    gameObject.SetActive(true);
-    isThrown = true;
-    isReturning = false;
+        transform.position = player.position;
+        gameObject.SetActive(true);
+        isThrown = true;
+        isReturning = false;
 
-    float directionX = player.localScale.x >= 0 ? 1f : -1f;
-    Vector2 direction = new Vector2(directionX, 0f);
+        float directionX = player.localScale.x >= 0 ? 1f : -1f;
+        Vector2 direction = new Vector2(directionX, 0f);
 
-    Vector3 newScale = transform.localScale;
-    newScale.x = Mathf.Abs(newScale.x) * directionX;
-    transform.localScale = newScale;
+        Vector3 newScale = transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x) * directionX;
+        transform.localScale = newScale;
 
-    rb.velocity = direction * throwForce;
+        rb.velocity = direction * throwForce;
 
-    Invoke(nameof(StartReturn), returnDelay);
-}
+        Invoke(nameof(StartReturn), returnDelay);
+    }
 
     void StartReturn()
     {
@@ -66,5 +66,17 @@ public class Lempar : MonoBehaviour
         isThrown = false;
         isReturning = false;
         CancelInvoke();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Mob"))
+        {
+            SistemNyawaMob nyawaMob = other.GetComponent<SistemNyawaMob>();
+            if (nyawaMob != null)
+            {
+                nyawaMob.KurangiNyawa();
+            }
+        }
     }
 }
