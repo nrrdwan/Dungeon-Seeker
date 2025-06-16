@@ -408,7 +408,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Handle dodge input with Z key - Modified to allow air dodges
+        // Handle dodge input with Z key - Modified to allow air dodges and removed wall sliding relation
         if (Input.GetKeyDown(KeyCode.Z) && currentDodgeCooldown <= 0 && 
            (grounded || !hasAirDodged || allowMultipleAirDodges) && !isDodging)
         {
@@ -965,53 +965,68 @@ public class PlayerMovement : MonoBehaviour
         return isDodging;
     }
 
-    // Start a dodge
+    // Start a dodge - modified to not force movement
     private void StartDodge()
     {
         isDodging = true;
-        isDamageImmune = true;
+        isDamageImmune = true; // Player is immune to damage during dodge
         dodgeTimer = 0f;
         
         // Set animation
         anim.SetBool("dodge", true);
         
-        // Apply dodge speed in the facing direction
-        float direction = transform.localScale.x > 0 ? 1f : -1f;
-        
-        // Different handling for ground vs air dodge
-        if (grounded)
+        // Apply dodge only if player is actually moving
+        float playerInput = Input.GetAxisRaw("Horizontal");
+        if (Mathf.Abs(playerInput) > 0.1f)
         {
-            // Ground dodge - standard implementation
-            float yVelocity = body.velocity.y;
-            body.velocity = new Vector2(direction * dodgeSpeed, yVelocity);
+            // Only apply dodge movement if player is pressing a direction
+            float direction = playerInput > 0 ? 1f : -1f;
             
-            Debug.Log("Player performed ground dodge!");
+            // Different handling for ground vs air dodge
+            if (grounded)
+            {
+                // Ground dodge - provide initial boost only if moving
+                float yVelocity = body.velocity.y;
+                body.velocity = new Vector2(direction * dodgeSpeed * 0.7f, yVelocity);
+                
+                Debug.Log("Player performed directional ground dodge!");
+            }
+            else
+            {
+                // Air dodge - special implementation, only if moving
+                float yVelocity = maintainYVelocityInAirDodge ? body.velocity.y : 0;
+                
+                // Apply air dodge force - option to add upward boost
+                if (airDodgeUpwardForce > 0 && body.velocity.y < 0) 
+                {
+                    // Only add upward force if falling (stops falling momentum)
+                    yVelocity = airDodgeUpwardForce;
+                }
+                
+                body.velocity = new Vector2(direction * airDodgeSpeed * 0.7f, yVelocity);
+                
+                Debug.Log("Player performed directional air dodge!");
+            }
         }
         else
         {
-            // Air dodge - special implementation
-            float yVelocity = maintainYVelocityInAirDodge ? body.velocity.y : 0;
-            
-            // Apply air dodge force - option to add upward boost
-            if (airDodgeUpwardForce > 0 && body.velocity.y < 0) 
-            {
-                // Only add upward force if falling (stops falling momentum)
-                yVelocity = airDodgeUpwardForce;
-            }
-            
-            body.velocity = new Vector2(direction * airDodgeSpeed, yVelocity);
-            
-            // Mark that we've used our air dodge
+            // If no direction pressed, perform stationary dodge
+            // Maintain vertical velocity but zero out horizontal
+            body.velocity = new Vector2(0, body.velocity.y);
+            Debug.Log("Player performed stationary dodge!");
+        }
+        
+        // Mark that we've used our air dodge if in the air
+        if (!grounded)
+        {
             hasAirDodged = true;
-            
-            Debug.Log("Player performed air dodge!");
         }
         
         // Start cooldown
         currentDodgeCooldown = dodgeCooldown;
     }
     
-    // Handle dodge physics and timing
+    // Handle dodge physics and timing - modified to respect player input
     private void HandleDodge()
     {
         // Update dodge timer
@@ -1023,20 +1038,45 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Maintain dodge speed
-            float direction = transform.localScale.x > 0 ? 1f : -1f;
-            
-            // Different handling for ground vs air dodge
-            if (grounded)
+            // Don't modify movement if the player is wall sliding
+            if (isTouchingWall)
             {
-                // Only override horizontal velocity on ground
-                body.velocity = new Vector2(direction * dodgeSpeed, body.velocity.y);
+                // Allow wall slide to continue working normally
+                return;
             }
-            else
+            
+            // Check if player is providing input during dodge
+            float playerInput = Input.GetAxisRaw("Horizontal");
+            
+            // Only change velocity if player is actually pressing a direction
+            if (Mathf.Abs(playerInput) > 0.1f)
             {
-                // For air dodge, we've already set velocity in StartDodge
-                // Optional: maintain horizontal velocity only
-                body.velocity = new Vector2(direction * airDodgeSpeed, body.velocity.y);
+                // Update character facing
+                if (playerInput > 0)
+                    transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                else if (playerInput < 0)
+                    transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
+                
+                // Different handling for ground vs air dodge
+                if (grounded)
+                {
+                    // Allow player to control dodge with reduced dodge speed for better control
+                    float dodgeBoost = dodgeSpeed * 0.8f;
+                    float controlledSpeed = playerInput * (speed + dodgeBoost);
+                    body.velocity = new Vector2(controlledSpeed, body.velocity.y);
+                }
+                else
+                {
+                    // For air dodge, allow horizontal control with air speed boost
+                    float airBoost = airDodgeSpeed * 0.8f;
+                    float controlledSpeed = playerInput * (speed + airBoost);
+                    body.velocity = new Vector2(controlledSpeed, body.velocity.y);
+                }
+            }
+            else 
+            {
+                // If no input during dodge, maintain zero horizontal velocity
+                body.velocity = new Vector2(0, body.velocity.y);
             }
         }
     }

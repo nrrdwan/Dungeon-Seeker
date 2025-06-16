@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c0ba83ec5566834c864cb7053e0d079
+guid: dec90b9f691b5724299fa7e108c53cab
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle-Sheet_0
+      name: heart_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 0
-        width: 20
-        height: 30
+        x: 0
+        y: 6
+        width: 261
+        height: 227
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 071a72d4234894749ad98159628633aa
-      internalID: -1568091855
+      spriteID: b39947d4dcc39b640b1da9c8cb0173c4
+      internalID: 801451470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_1
+      name: heart_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 0
-        width: 20
-        height: 28
+        x: 288
+        y: 1
+        width: 260
+        height: 228
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33b43c13b07a8af459f41743137eab7f
-      internalID: 1411101204
+      spriteID: 36af4814efa677d4982d15eaa750762f
+      internalID: 384971590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_2
+      name: heart_2
       rect:
         serializedVersion: 2
-        x: 69
+        x: 575
         y: 0
-        width: 20
-        height: 28
+        width: 260
+        height: 226
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,29 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba2a47843b638b148b41a596940f63cb
-      internalID: -1616023539
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 101
-        y: 0
-        width: 20
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2d0c631cfa6c3144a9cef2e42c98aa1
-      internalID: -2124306594
+      spriteID: db33430defe4f184ea729201fd9b8b0a
+      internalID: -1925960754
       vertices: []
       indices: 
       edges: []
@@ -204,10 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle-Sheet_0: -1568091855
-      Idle-Sheet_1: 1411101204
-      Idle-Sheet_2: -1616023539
-      Idle-Sheet_3: -2124306594
+      heart_0: 801451470
+      heart_1: 384971590
+      heart_2: -1925960754
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
