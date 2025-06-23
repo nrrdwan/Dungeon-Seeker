@@ -5,10 +5,14 @@ public class SistemNyawa : MonoBehaviour
     public int nyawaMaksimum = 3;
     private int nyawaSekarang;
 
-    public GameObject[] ikonNyawa; // Icon hati (optional)
-    public GameObject panelGameOver; // Panel Game Over (optional)
+    public GameObject[] ikonNyawa;
+    public GameObject panelGameOver;
 
     private PlayerMovement playerMovement;
+
+    [Header("Sound Effect")]
+    public AudioSource audioSource;         // Drag AudioSource dari inspector
+    public AudioClip damageClip;            // Suara saat nyawa berkurang
 
     private void Start()
     {
@@ -17,7 +21,6 @@ public class SistemNyawa : MonoBehaviour
 
         playerMovement = GetComponent<PlayerMovement>();
 
-        // 🔒 Sembunyikan panel game over di awal
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(false);
@@ -29,7 +32,7 @@ public class SistemNyawa : MonoBehaviour
         }
     }
 
-   private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Penghalang"))
         {
@@ -44,13 +47,19 @@ public class SistemNyawa : MonoBehaviour
         else if (other.CompareTag("Hati"))
         {
             TambahNyawa();
-            Destroy(other.gameObject); // Hapus hati setelah diambil
+            Destroy(other.gameObject);
         }
     }
 
     private void KurangiNyawa()
     {
         nyawaSekarang--;
+
+        // 🔊 Mainkan suara damage kalau tersedia
+        if (audioSource != null && damageClip != null)
+        {
+            audioSource.PlayOneShot(damageClip);
+        }
 
         Debug.Log("❤️ Nyawa tersisa: " + nyawaSekarang);
         UpdateUI();
@@ -63,7 +72,6 @@ public class SistemNyawa : MonoBehaviour
 
     private void UpdateUI()
     {
-        // Update ikon nyawa
         for (int i = 0; i < ikonNyawa.Length; i++)
         {
             ikonNyawa[i].SetActive(i < nyawaSekarang);
@@ -84,7 +92,7 @@ public class SistemNyawa : MonoBehaviour
             playerMovement.enabled = false;
         }
 
-        Time.timeScale = 0f; // Hentikan waktu (opsional)
+        Time.timeScale = 0f;
     }
 
     private void TambahNyawa()
