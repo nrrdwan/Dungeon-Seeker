@@ -4,10 +4,8 @@ public class Lempar : MonoBehaviour
 {
     public Transform player;
     public float throwForce = 10f;
-    public float returnDelay = 1.5f;
-    public float returnSpeed = 8f;
+    public float disappearAfter = 2f; // waktu setelah dilempar sebelum menghilang
 
-    private bool isReturning = false;
     private Rigidbody2D rb;
     private bool isThrown = false;
 
@@ -19,20 +17,6 @@ public class Lempar : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        if (isThrown && isReturning)
-        {
-            Vector2 direction = ((Vector2)player.position - rb.position).normalized;
-            rb.velocity = direction * returnSpeed;
-
-            if (Vector2.Distance(rb.position, player.position) < 0.5f)
-            {
-                ResetThrowable();
-            }
-        }
-    }
-
     public void Throw()
     {
         if (isThrown) return; // Cegah lempar ulang jika belum selesai
@@ -40,7 +24,6 @@ public class Lempar : MonoBehaviour
         transform.position = player.position;
         gameObject.SetActive(true);
         isThrown = true;
-        isReturning = false;
 
         float directionX = player.localScale.x >= 0 ? 1f : -1f;
         Vector2 direction = new Vector2(directionX, 0f);
@@ -51,12 +34,12 @@ public class Lempar : MonoBehaviour
 
         rb.velocity = direction * throwForce;
 
-        Invoke(nameof(StartReturn), returnDelay);
+        Invoke(nameof(DisableAfterTime), disappearAfter); // hilang setelah waktu tertentu
     }
 
-    void StartReturn()
+    void DisableAfterTime()
     {
-        isReturning = true;
+        ResetThrowable();
     }
 
     void ResetThrowable()
@@ -64,7 +47,6 @@ public class Lempar : MonoBehaviour
         gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         isThrown = false;
-        isReturning = false;
         CancelInvoke();
     }
 
@@ -77,6 +59,9 @@ public class Lempar : MonoBehaviour
             {
                 nyawaMob.KurangiNyawa();
             }
+
+            // Langsung hilang setelah kena musuh
+            ResetThrowable();
         }
     }
 }

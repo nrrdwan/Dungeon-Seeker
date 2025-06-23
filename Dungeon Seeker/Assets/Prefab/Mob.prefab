@@ -198,7 +198,7 @@ MonoBehaviour:
   peluruPrefab: {fileID: 5432891584985266417, guid: e43925b31d9d8ad43b649f1055800c9e, type: 3}
   titikLempar: {fileID: 6791867534754970042}
   jarakLempar: 5
-  kecepatanLempar: 5
+  kecepatanLempar: 10
   delayLempar: 2
 --- !u!114 &1113208089947921184
 MonoBehaviour:
