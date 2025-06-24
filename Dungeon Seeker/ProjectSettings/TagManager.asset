@@ -7,11 +7,13 @@ TagManager:
   - Ground
   - Penghalang
   - Mob
+  - Fire
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
