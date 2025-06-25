@@ -2,15 +2,24 @@ using UnityEngine;
 
 public class PengumpulPoin : MonoBehaviour
 {
-    public int totalPoin = 0;
+    private PlayerStatTracker statTracker;
+
+    private void Start()
+    {
+        statTracker = GetComponent<PlayerStatTracker>();
+        if (statTracker == null)
+        {
+            Debug.LogWarning("⚠️ Tidak ditemukan PlayerStatTracker di Player!");
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Poin"))
         {
-            totalPoin++;
-            Debug.Log("✨ Poin dikumpulkan! Total: " + totalPoin);
-            Destroy(other.gameObject); // Hapus objek poin
+            statTracker?.TambahPoin(1); // Tambah 1 poin ke stat
+            Debug.Log("✨ Poin dikumpulkan! Total: " + statTracker.totalPoin);
+            Destroy(other.gameObject); // Hapus poin
         }
     }
 }
