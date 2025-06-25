@@ -34,6 +34,18 @@ public class SistemNyawaMob : MonoBehaviour
         sudahMati = true;
         Debug.Log("Mob mati");
 
+        // Tambah mob ke statistik player
+        PlayerStatTracker stat = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStatTracker>();
+        if (stat != null)
+        {
+            stat.TambahMob();
+            Debug.Log("✅ Total mob sekarang: " + stat.totalMob);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ PlayerStatTracker tidak ditemukan!");
+        }
+
         // Set animasi kematian
         if (animator != null)
         {

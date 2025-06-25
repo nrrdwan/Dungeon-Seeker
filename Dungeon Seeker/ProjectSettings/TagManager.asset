@@ -9,6 +9,9 @@ TagManager:
   - Mob
   - Fire
   - Enemy
+  - Poin
+  - Hati
+  - Portal
   layers:
   - Default
   - TransparentFX

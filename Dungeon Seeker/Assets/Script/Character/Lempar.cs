@@ -4,12 +4,14 @@ public class Lempar : MonoBehaviour
 {
     public Transform player;
     public float throwForce = 10f;
-    public float disappearAfter = 2f; // waktu setelah dilempar sebelum menghilang
+    public float disappearAfter = 2f;
+    public float offset = 0.5f;
 
     private Rigidbody2D rb;
     private bool isThrown = false;
+    private float currentDirectionX = 1f; // arah lempar yang dikunci saat awal lempar
 
-    public bool IsAvailable => !isThrown; // Bisa dilempar kalau belum dilempar
+    public bool IsAvailable => !isThrown;
 
     void Start()
     {
@@ -19,22 +21,29 @@ public class Lempar : MonoBehaviour
 
     public void Throw()
     {
-        if (isThrown) return; // Cegah lempar ulang jika belum selesai
+        if (isThrown) return;
 
-        transform.position = player.position;
-        gameObject.SetActive(true);
+        // 🔒 Kunci arah lempar berdasarkan arah player saat tombol ditekan
+        currentDirectionX = player.localScale.x >= 0 ? 1f : -1f;
+
         isThrown = true;
+        gameObject.SetActive(true);
 
-        float directionX = player.localScale.x >= 0 ? 1f : -1f;
-        Vector2 direction = new Vector2(directionX, 0f);
+        Vector2 direction = new Vector2(currentDirectionX, 0f);
 
+        // ⏩ Lempar dari sisi player ke arah yang terkunci
+        transform.position = player.position + new Vector3(offset * currentDirectionX, 0f, 0f);
+
+        // Atur skala agar objek terlihat hadap ke arah lemparan
         Vector3 newScale = transform.localScale;
-        newScale.x = Mathf.Abs(newScale.x) * directionX;
+        newScale.x = Mathf.Abs(newScale.x) * currentDirectionX;
         transform.localScale = newScale;
 
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
         rb.velocity = direction * throwForce;
 
-        Invoke(nameof(DisableAfterTime), disappearAfter); // hilang setelah waktu tertentu
+        Invoke(nameof(DisableAfterTime), disappearAfter);
     }
 
     void DisableAfterTime()
@@ -44,10 +53,11 @@ public class Lempar : MonoBehaviour
 
     void ResetThrowable()
     {
-        gameObject.SetActive(false);
-        rb.velocity = Vector2.zero;
-        isThrown = false;
         CancelInvoke();
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        isThrown = false;
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -60,7 +70,6 @@ public class Lempar : MonoBehaviour
                 nyawaMob.KurangiNyawa();
             }
 
-            // Langsung hilang setelah kena musuh
             ResetThrowable();
         }
     }
