@@ -12,6 +12,7 @@ TagManager:
   - Poin
   - Hati
   - Portal
+  - Bos
   layers:
   - Default
   - TransparentFX

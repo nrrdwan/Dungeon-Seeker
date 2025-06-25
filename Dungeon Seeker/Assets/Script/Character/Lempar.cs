@@ -72,5 +72,17 @@ public class Lempar : MonoBehaviour
 
             ResetThrowable();
         }
+
+        // Untuk bos
+        if (other.CompareTag("Bos"))
+        {
+            SistemNyawaBos nyawaBos = other.GetComponent<SistemNyawaBos>();
+            if (nyawaBos != null)
+            {
+                nyawaBos.KurangiNyawa();
+            }
+
+            ResetThrowable();
+        }
     }
 }
