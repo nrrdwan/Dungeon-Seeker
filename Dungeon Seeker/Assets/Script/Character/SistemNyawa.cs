@@ -7,7 +7,7 @@ public class SistemNyawa : MonoBehaviour
 
     public GameObject[] ikonNyawa;
     public GameObject panelGameOver;
-
+ 
     private PlayerMovement playerMovement;
 
     [Header("Sound Effect")]
@@ -51,7 +51,7 @@ public class SistemNyawa : MonoBehaviour
         }
     }
 
-    private void KurangiNyawa()
+    public void KurangiNyawa()
     {
         nyawaSekarang--;
 
@@ -95,7 +95,7 @@ public class SistemNyawa : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    private void TambahNyawa()
+    public void TambahNyawa()
     {
         if (nyawaSekarang < nyawaMaksimum)
         {
