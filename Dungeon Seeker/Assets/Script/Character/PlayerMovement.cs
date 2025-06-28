@@ -107,6 +107,14 @@ public class PlayerMovement : MonoBehaviour
         // Update animations
         playerAnimation.UpdateAnimations(horizontalVelocity);
 
+        // Update animator parameter "run" hanya jika grounded
+        if (anim != null && groundDetection != null)
+        {
+            bool isGrounded = groundDetection.IsGrounded();
+            anim.SetBool("run", Mathf.Abs(horizontalVelocity) > 0.1f && isGrounded);
+            anim.SetBool("grounded", isGrounded);
+        }
+
         // Toggle movement method with T key (for testing)
         if (Input.GetKeyDown(KeyCode.T))
         {

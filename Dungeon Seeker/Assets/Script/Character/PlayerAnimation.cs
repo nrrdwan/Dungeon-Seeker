@@ -102,11 +102,16 @@ public class PlayerAnimation : MonoBehaviour
                 anim.SetBool("jump", true);
                 anim.SetBool("fall", false);
             }
-            else if (currentVelocityY < -0.1f)
+            else if (currentVelocityY < -0.01f) // ubah threshold
             {
                 // Falling
                 anim.SetBool("jump", false);
                 anim.SetBool("fall", true);
+            }
+            else
+            {
+                // Jika melayang (nyaris 0), pastikan fall tetap false
+                anim.SetBool("fall", false);
             }
         }
     }
