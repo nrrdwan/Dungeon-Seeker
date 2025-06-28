@@ -14,6 +14,12 @@ public class PortalGameOver : MonoBehaviour
 
     private bool gameEnded = false;
 
+    void Awake()
+    {
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+    }
+
     void Start()
     {
         // 🔒 Pastikan panel disembunyikan di awal
