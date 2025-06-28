@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -113,12 +126,12 @@ TextureImporter:
       name: Death-Sheet_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 158
         y: 0
-        width: 19
-        height: 22
+        width: 23
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,7 +152,7 @@ TextureImporter:
         width: 23
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -155,12 +168,12 @@ TextureImporter:
       name: Death-Sheet_2
       rect:
         serializedVersion: 2
-        x: 157
+        x: 342
         y: 0
-        width: 24
-        height: 25
+        width: 34
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -176,12 +189,12 @@ TextureImporter:
       name: Death-Sheet_3
       rect:
         serializedVersion: 2
-        x: 215
+        x: 214
         y: 0
-        width: 31
-        height: 15
+        width: 32
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,9 +213,9 @@ TextureImporter:
         x: 278
         y: 0
         width: 33
-        height: 12
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,22 +228,22 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death-Sheet_5
+      name: Death-Sheet_6
       rect:
         serializedVersion: 2
-        x: 342
+        x: 20
         y: 0
-        width: 34
-        height: 16
+        width: 23
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53a39df9698fea14883f7a802970bd07
-      internalID: -586445627
+      spriteID: 05180f0b9c1530544a40a764f34c08b2
+      internalID: 1189595922
       vertices: []
       indices: 
       edges: []
@@ -252,6 +265,7 @@ TextureImporter:
       Death-Sheet_3: 707238631
       Death-Sheet_4: -521019051
       Death-Sheet_5: -586445627
+      Death-Sheet_6: 1189595922
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

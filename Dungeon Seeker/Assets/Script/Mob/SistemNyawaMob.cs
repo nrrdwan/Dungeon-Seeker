@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class SistemNyawaMob : MonoBehaviour
 {
+    [Header("Nyawa")]
     public int nyawaMaksimum = 2;
     private int nyawaSekarang;
 
+    [Header("Komponen")]
     private Animator animator;
     private bool sudahMati = false;
 
@@ -39,10 +41,33 @@ public class SistemNyawaMob : MonoBehaviour
         Debug.Log("Mob mati");
         animator.SetBool("isDead", true);
         animator.SetTrigger("die");
+
+        // Tambah mob ke statistik player
+        PlayerStatTracker stat = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerStatTracker>();
+        if (stat != null)
+        {
+            stat.TambahMob();
+            Debug.Log("✅ Total mob sekarang: " + stat.totalMob);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ PlayerStatTracker tidak ditemukan!");
+        }
+
+        // Set animasi kematian
+        if (animator != null)
+        {
+            animator.SetBool("isDead", true);
+        }
+
+        // Matikan physics dan collider
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().simulated = false;
+    }
 
-        // Hancurkan setelah animasi selesai (ganti sesuai durasi animasi)
-        Destroy(gameObject, 2f); 
+    // Fungsi ini akan dipanggil lewat Animation Event di akhir animasi mati
+    public void Hancurkan()
+    {
+        Destroy(gameObject);
     }
 }

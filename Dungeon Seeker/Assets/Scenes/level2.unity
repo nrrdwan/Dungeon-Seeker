@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 1144697078}
   - component: {fileID: 1144697085}
   - component: {fileID: 1144697087}
-  - component: {fileID: 1144697088}
+  - component: {fileID: 1144697094}
   - component: {fileID: 1144697092}
   - component: {fileID: 1144697091}
   - component: {fileID: 1144697090}
@@ -944,7 +944,8 @@ MonoBehaviour:
   - {fileID: 1053500356}
   - {fileID: 2142812457}
   panelGameOver: {fileID: 0}
-  damageCooldown: 1
+  audioSource: {fileID: 0}
+  damageClip: {fileID: 0}
 --- !u!58 &1144697086
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -992,23 +993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1dfda48c06cbb43bac5ce33aa53495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1144697088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144697076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb1a2c5e5d5a514a98df4d48f1eff4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 7
-  useRigidbody: 1
-  accelerationTime: 0.08
-  lempar: {fileID: 2138598082}
-  throwCooldown: 0.5
 --- !u!114 &1144697089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,6 +1244,7 @@ BoxCollider2D:
   m_Size: {x: 0.45, y: 0.51}
   m_EdgeRadius: 0
 --- !u!114 &1150862743
+--- !u!114 &1144697094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1325,6 +1310,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nyawaMaksimum: 2
+  m_GameObject: {fileID: 1144697076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb1a2c5e5d5a514a98df4d48f1eff4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7
+  useRigidbody: 1
+  accelerationTime: 0.08
+  lempar: {fileID: 0}
+  throwCooldown: 0.5
 --- !u!1 &1201355987
 GameObject:
   m_ObjectHideFlags: 0
@@ -60278,8 +60274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1144697082}
   throwForce: 20
-  returnDelay: 0.4
-  returnSpeed: 20
+  disappearAfter: 2
 --- !u!50 &2138598083
 Rigidbody2D:
   serializedVersion: 4

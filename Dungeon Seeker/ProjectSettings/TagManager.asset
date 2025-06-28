@@ -9,6 +9,10 @@ TagManager:
   - Mob
   - Fire
   - Enemy
+  - Poin
+  - Hati
+  - Portal
+  - Bos
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Bos
   - 
   - 
   - 
