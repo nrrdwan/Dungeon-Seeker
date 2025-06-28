@@ -108,4 +108,12 @@ public class SistemNyawa : MonoBehaviour
             Debug.Log("Nyawa sudah maksimum.");
         }
     }
+
+    // ✅ Tambahan untuk instan mati 
+    public void InstanMati()
+    {
+        nyawaSekarang = 0;
+        UpdateUI();
+        GameOver();
+    }
 }
