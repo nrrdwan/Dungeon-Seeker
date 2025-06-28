@@ -8,6 +8,10 @@ public class SistemNyawaMob : MonoBehaviour
     private Animator animator;
     private bool sudahMati = false;
 
+    // Tambahkan di bawah deklarasi variabel lain
+    private static readonly int DieParam = Animator.StringToHash("die");
+    private static readonly int HurtParam = Animator.StringToHash("hurt");
+
     void Start()
     {
         nyawaSekarang = nyawaMaksimum;
@@ -21,6 +25,8 @@ public class SistemNyawaMob : MonoBehaviour
         nyawaSekarang--;
         Debug.Log("Mob kena! Sisa nyawa: " + nyawaSekarang);
 
+        animator.SetTrigger("hurt"); // Tambahan: trigger animasi hurt
+
         if (nyawaSekarang <= 0)
         {
             Mati();
@@ -32,6 +38,7 @@ public class SistemNyawaMob : MonoBehaviour
         sudahMati = true;
         Debug.Log("Mob mati");
         animator.SetBool("isDead", true);
+        animator.SetTrigger("die");
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().simulated = false;
 

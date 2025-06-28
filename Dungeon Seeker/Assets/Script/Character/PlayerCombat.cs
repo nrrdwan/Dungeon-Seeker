@@ -58,22 +58,10 @@ public class PlayerCombat : MonoBehaviour
     {
         if (anim != null)
         {
-            // PAKSA stop semua yang sedang jalan
             StopAllCoroutines();
-            
-            // PAKSA set false dulu untuk clear state
-            anim.SetBool("attack", false);
-            
-            // PAKSA update animator agar process perubahan
-            anim.Update(0f);
-            
-            // SEKARANG set true
-            anim.SetBool("attack", true);
-            
-            Debug.Log($"FORCE ANIMATION - Attack Bool = TRUE (Combo {currentCombo})");
-            
-            // Auto reset setelah waktu singkat
-            StartCoroutine(ForceReset());
+            anim.ResetTrigger("attack"); // Reset dulu
+            anim.SetTrigger("attack");   // Langsung trigger
+            Debug.Log($"FORCE ANIMATION - Attack Trigger (Combo {currentCombo})");
         }
     }
 
@@ -97,15 +85,17 @@ public class PlayerCombat : MonoBehaviour
         
         foreach (Collider2D enemy in enemiesHit)
         {
-            var enemyHealth = enemy.GetComponent<Health>();
+            // Gunakan SistemNyawaMob sebagai pengganti Health
+            var enemyHealth = enemy.GetComponent<SistemNyawaMob>();
             if (enemyHealth != null)
             {
-                // Damage scaling per combo
-                float comboMultiplier = 1f + (currentCombo - 1) * 0.25f;
-                float finalDamage = attackDamage * comboMultiplier;
+                // Kurangi nyawa berdasarkan combo
+                for (int i = 0; i < currentCombo; i++)
+                {
+                    enemyHealth.KurangiNyawa();
+                }
                 
-                enemyHealth.TakeDamage(Mathf.RoundToInt(finalDamage));
-                Debug.Log($"Force Hit {enemy.name} for {finalDamage} damage!");
+                Debug.Log($"Hit {enemy.name} with combo {currentCombo}!");
             }
 
             var enemyRb = enemy.GetComponent<Rigidbody2D>();
