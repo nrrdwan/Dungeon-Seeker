@@ -113,10 +113,10 @@ TextureImporter:
       name: Bringer-of-Death-SpritSheet_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 652
-        width: 40
-        height: 54
+        x: 83
+        y: 649
+        width: 43
+        height: 60
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
