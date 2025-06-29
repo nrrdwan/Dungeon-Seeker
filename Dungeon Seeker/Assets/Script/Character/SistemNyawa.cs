@@ -7,12 +7,14 @@ public class SistemNyawa : MonoBehaviour
 
     public GameObject[] ikonNyawa;
     public GameObject panelGameOver;
-
+ 
     private PlayerMovement playerMovement;
 
     [Header("Sound Effect")]
     public AudioSource audioSource;         // Drag AudioSource dari inspector
     public AudioClip damageClip;            // Suara saat nyawa berkurang
+
+    private Animator animator;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class SistemNyawa : MonoBehaviour
         UpdateUI();
 
         playerMovement = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
 
         if (panelGameOver != null)
         {
@@ -51,7 +54,7 @@ public class SistemNyawa : MonoBehaviour
         }
     }
 
-    private void KurangiNyawa()
+    public void KurangiNyawa()
     {
         nyawaSekarang--;
 
@@ -59,6 +62,12 @@ public class SistemNyawa : MonoBehaviour
         if (audioSource != null && damageClip != null)
         {
             audioSource.PlayOneShot(damageClip);
+        }
+
+        // Tambahkan animasi hurt
+        if (animator != null)
+        {
+            animator.SetTrigger("hurt");
         }
 
         Debug.Log("❤️ Nyawa tersisa: " + nyawaSekarang);
@@ -82,6 +91,11 @@ public class SistemNyawa : MonoBehaviour
     {
         Debug.Log("☠️ Game Over!");
 
+        if (animator != null)
+        {
+            animator.SetTrigger("die");
+        }
+
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(true);
@@ -92,10 +106,16 @@ public class SistemNyawa : MonoBehaviour
             playerMovement.enabled = false;
         }
 
+        StartCoroutine(GameOverDelay());
+    }
+
+    private System.Collections.IEnumerator GameOverDelay()
+    {
+        yield return new WaitForSeconds(1f);
         Time.timeScale = 0f;
     }
 
-    private void TambahNyawa()
+    public void TambahNyawa()
     {
         if (nyawaSekarang < nyawaMaksimum)
         {

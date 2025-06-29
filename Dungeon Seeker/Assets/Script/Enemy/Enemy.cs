@@ -70,13 +70,6 @@ public class Enemy : MonoBehaviour
                 // Panggil fungsi pengurangan nyawa
                 sistemNyawa.SendMessage("KurangiNyawa");
             }
-            else
-            {
-                // Fallback jika tidak ada SistemNyawa, gunakan Health lama
-                Health health = hit.collider.GetComponent<Health>();
-                if (health != null)
-                    health.TakeDamage(damage);
-            }
         }
     }
 

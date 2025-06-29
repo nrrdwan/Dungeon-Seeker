@@ -64,19 +64,37 @@ public class Lempar : MonoBehaviour
     {
         if (other.CompareTag("Mob"))
         {
-            SistemNyawaMob nyawaMob = other.GetComponent<SistemNyawaMob>();
-            if (nyawaMob != null)
+            bool hitProcessed = false;
+
+            // Cek HealthFlyingDemon terlebih dahulu (prioritas)
+            HealthFlyingDemon healthFlyingDemon = other.GetComponent<HealthFlyingDemon>();
+            if (healthFlyingDemon != null)
             {
-                nyawaMob.KurangiNyawa();
+                healthFlyingDemon.KurangiNyawa();
+                hitProcessed = true;
+            }
+            
+            // Jika bukan Flying Demon, cek mob biasa
+            if (!hitProcessed)
+            {
+                SistemNyawaMob nyawaMob = other.GetComponent<SistemNyawaMob>();
+                if (nyawaMob != null)
+                {
+                    nyawaMob.KurangiNyawa();
+                    hitProcessed = true;
+                }
             }
 
-            ResetThrowable();
+            if (hitProcessed)
+            {
+                ResetThrowable();
+            }
         }
 
         // Untuk bos
         if (other.CompareTag("Bos"))
         {
-            SistemNyawaBos nyawaBos = other.GetComponent<SistemNyawaBos>();
+            HealthBoss2 nyawaBos = other.GetComponent<HealthBoss2>();
             if (nyawaBos != null)
             {
                 nyawaBos.KurangiNyawa();

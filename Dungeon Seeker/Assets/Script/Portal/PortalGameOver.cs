@@ -1,18 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PortalGameOver : MonoBehaviour
 {
     [Header("Drag & Drop")]
     public GameObject gameOverPanel;
-    public TMP_Text textPoin;
-    public TMP_Text textMob;
+    public Text textPoin; // Ganti TMP_Text jadi Text
+    public Text textMob;
 
     [Header("Sumber Data")]
     public PlayerStatTracker playerStats;
 
     private bool gameEnded = false;
+
+    void Awake()
+    {
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+    }
 
     void Start()
     {
@@ -37,10 +42,10 @@ public class PortalGameOver : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
 
-        if (textPoin != null)
+        if (textPoin != null && playerStats != null)
             textPoin.text = "Poin: " + playerStats.totalPoin;
 
-        if (textMob != null)
+        if (textMob != null && playerStats != null)
             textMob.text = "Mob: " + playerStats.totalMob;
 
         Time.timeScale = 0f;
