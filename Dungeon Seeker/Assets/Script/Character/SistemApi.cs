@@ -2,14 +2,8 @@ using UnityEngine;
 
 public class SistemApi : MonoBehaviour
 {
-    [Header("Nyawa")]
-    public int nyawaMaksimum = 3;
-    private int nyawaSekarang;
-    public GameObject[] ikonNyawa;
-    public GameObject panelGameOver;
-
-    [Header("Api")]
-    [SerializeField] private float fireDamageInterval = 1f;
+    [Header("API Settings")]
+    [SerializeField] private float fireDamageInterval = 1f; // Damage tiap berapa detik
     [SerializeField] private float sinkSpeed = 0.5f;
     [SerializeField] private float maxSinkDepth = 0.5f;
 
@@ -20,15 +14,14 @@ public class SistemApi : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private int originalSortingOrder;
-
     private Rigidbody2D rb;
     private float originalGravity;
 
-    void Start()
-    {
-        nyawaSekarang = nyawaMaksimum;
-        UpdateUI();
+    // 🔗 Referensi ke SistemNyawa
+    private SistemNyawa sistemNyawa;
 
+    private void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -42,9 +35,15 @@ public class SistemApi : MonoBehaviour
         {
             originalSortingOrder = spriteRenderer.sortingOrder;
         }
+
+        sistemNyawa = GetComponent<SistemNyawa>();
+        if (sistemNyawa == null)
+        {
+            Debug.LogError("❌ SistemNyawa tidak ditemukan di GameObject ini!");
+        }
     }
 
-    void Update()
+    private void Update()
     {
         if (isInFire)
         {
@@ -52,7 +51,7 @@ public class SistemApi : MonoBehaviour
 
             if (damageTimer >= fireDamageInterval)
             {
-                KurangiNyawa(); // Damage dari api
+                KurangiNyawa(); // 🔥 Damage dari api
                 damageTimer = 0f;
             }
 
@@ -84,71 +83,53 @@ public class SistemApi : MonoBehaviour
         }
     }
 
-    private void KurangiNyawa(int jumlah = 1)
-    {
-        nyawaSekarang -= jumlah;
-        Debug.Log("Nyawa berkurang: " + jumlah + " | Sisa nyawa: " + nyawaSekarang);
-        UpdateUI();
-
-        if (nyawaSekarang <= 0)
-        {
-            GameOver();
-        }
-    }
-
-    private void UpdateUI()
-    {
-        for (int i = 0; i < ikonNyawa.Length; i++)
-        {
-            ikonNyawa[i].SetActive(i < nyawaSekarang);
-        }
-    }
-
-    private void GameOver()
-    {
-        Debug.Log("Game Over!");
-
-        if (panelGameOver != null)
-        {
-            panelGameOver.SetActive(true);
-        }
-
-        // Freeze player movement (opsional)
-        var movement = GetComponent<PlayerMovement>();
-        if (movement != null)
-        {
-            movement.enabled = false;
-        }
-
-        Time.timeScale = 0f; // Pause game
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Fire"))
-{
-    isInFire = true;
-    originalPosition = transform.position;
+        {
+            isInFire = true;
+            originalPosition = transform.position;
 
-    // 🔽 Matikan gravitasi agar tenggelam pelan bisa terlihat
-    if (rb != null) rb.gravityScale = 0;
+            if (rb != null) rb.gravityScale = 0;
+            if (spriteRenderer != null)
+                spriteRenderer.sortingOrder = originalSortingOrder - 1;
 
-    if (spriteRenderer != null)
-        spriteRenderer.sortingOrder = originalSortingOrder - 1;
-}
+            Animator anim = GetComponent<Animator>();
+            if (anim != null)
+            {
+                anim.SetTrigger("burn"); // Optional animasi terbakar
+            }
+
+            Debug.Log("🔥 Masuk ke api!");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Fire"))
-{
-    isInFire = false;
+        {
+            isInFire = false;
 
-    // 🔼 Kembalikan gravitasi seperti semula
-    if (rb != null) rb.gravityScale = originalGravity;
+            if (rb != null) rb.gravityScale = originalGravity;
+            if (spriteRenderer != null)
+                spriteRenderer.sortingOrder = originalSortingOrder;
 
-    if (spriteRenderer != null)
-        spriteRenderer.sortingOrder = originalSortingOrder;
-}
+            Debug.Log("💨 Keluar dari api!");
+        }
+    }
+
+    private void KurangiNyawa(int jumlah = 1)
+    {
+        if (sistemNyawa != null)
+        {
+            for (int i = 0; i < jumlah; i++)
+            {
+                sistemNyawa.KurangiNyawa();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Tidak bisa kurangi nyawa, SistemNyawa tidak ditemukan!");
+        }
     }
 }

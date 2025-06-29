@@ -82,32 +82,50 @@ public class PlayerCombat : MonoBehaviour
     {
         Vector2 attackPosition = GetAttackPosition();
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPosition, attackRange, enemyLayer);
-        
+
         foreach (Collider2D enemy in enemiesHit)
         {
-            // Gunakan SistemNyawaMob sebagai pengganti Health
+            bool hitProcessed = false;
+
+            // 1. Coba pukul Mob biasa
             var enemyHealth = enemy.GetComponent<SistemNyawaMob>();
             if (enemyHealth != null)
             {
-                // Kurangi nyawa berdasarkan combo
                 for (int i = 0; i < currentCombo; i++)
-                {
                     enemyHealth.KurangiNyawa();
-                }
-                
-                Debug.Log($"Hit {enemy.name} with combo {currentCombo}!");
+
+                hitProcessed = true;
+                Debug.Log($"Hit MOB {enemy.name} with combo {currentCombo}!");
             }
 
-            var enemyRb = enemy.GetComponent<Rigidbody2D>();
-            if (enemyRb != null)
+            // 2. Coba pukul BOS
+            if (!hitProcessed)
             {
-                Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                float knockbackForce = 2f + (currentCombo * 0.8f);
-                enemyRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                var bossHealth = enemy.GetComponent<HealthBoss2>(); // atau SistemNyawaBos
+                if (bossHealth != null)
+                {
+                    for (int i = 0; i < currentCombo; i++)
+                        bossHealth.KurangiNyawa();
+
+                    hitProcessed = true;
+                    Debug.Log($"Hit BOS {enemy.name} with combo {currentCombo}!");
+                }
+            }
+
+            // Tambah efek knockback kalau ada Rigidbody
+            if (hitProcessed)
+            {
+                var enemyRb = enemy.GetComponent<Rigidbody2D>();
+                if (enemyRb != null)
+                {
+                    Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+                    float knockbackForce = 2f + (currentCombo * 0.8f);
+                    enemyRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                }
+
+                CreateAttackEffect(attackPosition);
             }
         }
-
-        CreateAttackEffect(attackPosition);
     }
 
     private Vector2 GetAttackPosition()
