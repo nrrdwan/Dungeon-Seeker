@@ -14,12 +14,15 @@ public class SistemNyawa : MonoBehaviour
     public AudioSource audioSource;         // Drag AudioSource dari inspector
     public AudioClip damageClip;            // Suara saat nyawa berkurang
 
+    private Animator animator;
+
     private void Start()
     {
         nyawaSekarang = nyawaMaksimum;
         UpdateUI();
 
         playerMovement = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
 
         if (panelGameOver != null)
         {
@@ -61,6 +64,12 @@ public class SistemNyawa : MonoBehaviour
             audioSource.PlayOneShot(damageClip);
         }
 
+        // Tambahkan animasi hurt
+        if (animator != null)
+        {
+            animator.SetTrigger("hurt");
+        }
+
         Debug.Log("❤️ Nyawa tersisa: " + nyawaSekarang);
         UpdateUI();
 
@@ -82,6 +91,11 @@ public class SistemNyawa : MonoBehaviour
     {
         Debug.Log("☠️ Game Over!");
 
+        if (animator != null)
+        {
+            animator.SetTrigger("die");
+        }
+
         if (panelGameOver != null)
         {
             panelGameOver.SetActive(true);
@@ -92,6 +106,12 @@ public class SistemNyawa : MonoBehaviour
             playerMovement.enabled = false;
         }
 
+        StartCoroutine(GameOverDelay());
+    }
+
+    private System.Collections.IEnumerator GameOverDelay()
+    {
+        yield return new WaitForSeconds(1f);
         Time.timeScale = 0f;
     }
 

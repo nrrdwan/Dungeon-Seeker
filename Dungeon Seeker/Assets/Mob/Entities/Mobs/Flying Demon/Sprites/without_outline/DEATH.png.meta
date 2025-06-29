@@ -1,0 +1,321 @@
+fileFormatVersion: 2
+guid: 3a0d577ff976be04385776615472a645
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DEATH_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 2
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11dfd74a6b4f92048b9102262d8b0207
+      internalID: -2117391431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEATH_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 1
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 705a9c2732e1ebf4abbc5d5f5ce22f42
+      internalID: 2058389631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEATH_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 1
+        width: 58
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78654b55b4536974ca18c29f6c442f3a
+      internalID: 676817802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEATH_3
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 1
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8c9b7857c2fd72439e3294331c77fd1
+      internalID: -1164457006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEATH_4
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 1
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebedf917da1806b459e3047e2964cf10
+      internalID: 1546781760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEATH_28
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 1
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b0c00860ba604488bb091cb058e8a3
+      internalID: 1728330022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      DEATH_0: -2117391431
+      DEATH_1: 2058389631
+      DEATH_10: 117664158
+      DEATH_11: 588234398
+      DEATH_12: 349841901
+      DEATH_13: -93449647
+      DEATH_15: 1938661724
+      DEATH_16: 820541409
+      DEATH_17: 2137121508
+      DEATH_19: -1006584752
+      DEATH_2: 676817802
+      DEATH_20: -55325450
+      DEATH_21: 114497834
+      DEATH_22: -1748948765
+      DEATH_24: -1605753086
+      DEATH_25: -538458860
+      DEATH_26: -420661268
+      DEATH_27: 1984869619
+      DEATH_28: 1728330022
+      DEATH_29: 1777792689
+      DEATH_3: -1164457006
+      DEATH_30: 136618343
+      DEATH_31: 2008456874
+      DEATH_32: -1868887223
+      DEATH_33: 1142923613
+      DEATH_34: 1986724116
+      DEATH_35: 628431935
+      DEATH_36: 1442086163
+      DEATH_37: -599151024
+      DEATH_38: -956530645
+      DEATH_39: -563543578
+      DEATH_4: 1546781760
+      DEATH_40: -482310178
+      DEATH_41: 1178525585
+      DEATH_42: -778864123
+      DEATH_43: 1748379509
+      DEATH_44: -1978590599
+      DEATH_45: 1772020788
+      DEATH_46: 471509245
+      DEATH_47: -93708723
+      DEATH_48: -2075910417
+      DEATH_49: 2054928213
+      DEATH_5: -1866259071
+      DEATH_50: -3635176
+      DEATH_51: 1926599389
+      DEATH_52: 117662042
+      DEATH_53: 875858867
+      DEATH_54: -944254424
+      DEATH_55: -428827194
+      DEATH_56: 1678575361
+      DEATH_57: 2012244719
+      DEATH_58: -1161282424
+      DEATH_59: -1187799169
+      DEATH_6: 1479086088
+      DEATH_60: -952491444
+      DEATH_61: 141186374
+      DEATH_62: 1002592470
+      DEATH_63: 1664998402
+      DEATH_64: 2093746905
+      DEATH_65: -1252284807
+      DEATH_66: -1594913573
+      DEATH_67: -150157272
+      DEATH_68: 1212641997
+      DEATH_69: -63492630
+      DEATH_7: 426697307
+      DEATH_70: -953009195
+      DEATH_8: -289419447
+      DEATH_9: -2013298371
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
