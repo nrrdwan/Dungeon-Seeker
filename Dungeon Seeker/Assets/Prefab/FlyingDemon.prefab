@@ -264,6 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef2c941947c57d43a266ee5472bd47d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nyawaMaksimum: 3
+  nyawaMaksimum: 1
   knockbackForce: 5
   knockbackDuration: 0.2

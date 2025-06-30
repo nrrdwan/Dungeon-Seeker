@@ -25,7 +25,15 @@ public class PindahSceneButton : MonoBehaviour
 
     public void PindahScene()
     {
-        Time.timeScale = 1f; // ⚠️ KEMBALIKAN waktu sebelum load scene
+        Time.timeScale = 1f; // ⚠️ Kembalikan waktu sebelum load scene
+
+        // ✅ Hancurkan player jika ada
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Destroy(player);
+            Debug.Log("🗑️ Player dihancurkan sebelum pindah scene.");
+        }
 
         if (!string.IsNullOrEmpty(namaSceneTujuan))
         {

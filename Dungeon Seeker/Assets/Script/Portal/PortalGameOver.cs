@@ -43,7 +43,12 @@ public class PortalGameOver : MonoBehaviour
             gameOverPanel.SetActive(true);
 
         if (textPoin != null && playerStats != null)
+        {
             textPoin.text = "Poin: " + playerStats.totalPoin;
+
+            // 🔼 Tambahkan ke poin global upgrade
+            UpgradeSystem.poinGlobal += playerStats.totalPoin;
+        }
 
         if (textMob != null && playerStats != null)
             textMob.text = "Mob: " + playerStats.totalMob;

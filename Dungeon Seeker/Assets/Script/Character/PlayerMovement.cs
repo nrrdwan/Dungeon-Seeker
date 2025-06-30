@@ -22,7 +22,18 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Throwable Reference")]
     [SerializeField] private Lempar lempar;
-    [SerializeField] private float throwCooldown = 0.5f;
+    [SerializeField] private float throwCooldown = 5f;
+    [SerializeField] private float baseThrowCooldown = 5f; // Base cooldown value
+    private float lastThrowTime = 0f;
+
+    [Header("Combat Cooldown")]
+    [SerializeField] private float attackCooldown = 2f;
+    [SerializeField] private float baseAttackCooldown = 2f; // Base cooldown value
+    private float lastAttackTime = 0f; // Waktu terakhir attack
+    [SerializeField] private int maxComboCount = 3; // Maksimal combo sebelum cooldown
+    private int currentComboCount = 0; // Combo saat ini
+    [SerializeField] private float comboResetTime = 2f; // Waktu reset combo jika tidak input
+    private float lastComboTime = 0f; // Waktu combo terakhir   
 
     // Component References
     private PlayerJump playerJump;
@@ -34,6 +45,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        // Cek apakah sudah ada player lain di DontDestroyOnLoad
+        GameObject[] existingPlayers = GameObject.FindGameObjectsWithTag("Player");
+        
+        if (existingPlayers.Length > 1)
+        {
+            Debug.Log("🔄 Menghapus player duplikat...");
+            // Hapus player yang bukan di DontDestroyOnLoad (player lama)
+            foreach (GameObject player in existingPlayers)
+            {
+                if (player != this.gameObject && player.scene.name != "DontDestroyOnLoad")
+                {
+                    Destroy(player);
+                }
+            }
+        }
+        
+        // Pindahkan player ini ke DontDestroyOnLoad jika belum
+        if (transform.parent == null)
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
+        
         // Get reference for rigidbody from object
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -47,6 +80,26 @@ public class PlayerMovement : MonoBehaviour
         
         // Initialize components
         InitializeComponents();
+
+        // Store base cooldown values
+        baseThrowCooldown = throwCooldown;
+        baseAttackCooldown = attackCooldown;
+    }
+
+    void Start()
+    {
+        if (PlayerStatTracker.Instance != null)
+        {
+            throwCooldown = PlayerStatTracker.Instance.throwCooldown;
+            attackCooldown = PlayerStatTracker.Instance.attackCooldown;
+        }
+
+        // Tambahkan ini untuk memindahkan kembali ke posisi awal
+        if (startPosition != Vector3.zero)
+        {
+            transform.position = startPosition;
+            Debug.Log("🔁 Player dikembalikan ke posisi awal: " + startPosition);
+        }
     }
 
     private void ConfigureRigidbody()
@@ -98,8 +151,8 @@ public class PlayerMovement : MonoBehaviour
         // Handle throwing objects
         HandleThrowInput();
 
-        // Handle attack input (now using C key)
-        playerCombat.HandleAttackInput();
+        // Handle attack input (now using C key) - Ubah ini
+        HandleAttackInput();
 
         // Handle dodge input
         playerDodge.HandleDodgeInput();
@@ -154,10 +207,79 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleThrowInput()
     {
-        if (Input.GetKeyDown(KeyCode.X) && lempar != null && lempar.IsAvailable)
+        // Debug untuk cek status
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            lempar.Throw();
-            Debug.Log("Player threw an object");
+            Debug.Log($"X pressed - Time: {Time.time}, LastThrow: {lastThrowTime}, Cooldown: {throwCooldown}");
+            Debug.Log($"Can throw: {Time.time >= lastThrowTime + throwCooldown}");
+            Debug.Log($"Lempar available: {lempar != null && lempar.IsAvailable}");
+        }
+
+        // Cek cooldown terlebih dahulu
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (Time.time < lastThrowTime + throwCooldown)
+            {
+                float remainingTime = (lastThrowTime + throwCooldown) - Time.time;
+                Debug.Log($"Throw on cooldown! Wait {remainingTime:F1} seconds");
+                return; // Keluar dari method jika masih cooldown
+            }
+
+            if (lempar != null && lempar.IsAvailable)
+            {
+                lempar.Throw();
+                lastThrowTime = Time.time;
+                Debug.Log($"Player threw an object at time: {Time.time}");
+            }
+            else
+            {
+                Debug.Log("Cannot throw - lempar not available or null");
+            }
+        }
+    }
+
+    void HandleAttackInput()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // Reset combo jika sudah terlalu lama tidak input
+            if (Time.time - lastComboTime > comboResetTime)
+            {
+                currentComboCount = 0;
+                Debug.Log("Combo reset due to timeout");
+            }
+
+            // Cek apakah sudah mencapai max combo dan masih dalam cooldown
+            if (currentComboCount >= maxComboCount && Time.time < lastAttackTime + attackCooldown)
+            {
+                float remainingTime = (lastAttackTime + attackCooldown) - Time.time;
+                Debug.Log($"Attack on cooldown! Wait {remainingTime:F1} seconds");
+                return;
+            }
+
+            // Jika sudah melewati cooldown, reset combo
+            if (currentComboCount >= maxComboCount && Time.time >= lastAttackTime + attackCooldown)
+            {
+                currentComboCount = 0;
+                Debug.Log("Cooldown finished - combo reset");
+            }
+
+            // Lakukan attack
+            if (playerCombat != null)
+            {
+                playerCombat.HandleAttackInput();
+                currentComboCount++;
+                lastComboTime = Time.time;
+                
+                Debug.Log($"Player attacked! Combo: {currentComboCount}/{maxComboCount}");
+                
+                // Jika sudah mencapai max combo, mulai cooldown
+                if (currentComboCount >= maxComboCount)
+                {
+                    lastAttackTime = Time.time;
+                    Debug.Log($"Max combo reached! Cooldown started for {attackCooldown} seconds");
+                }
+            }
         }
     }
 
@@ -176,8 +298,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateCooldowns()
     {
-       
         playerDodge.UpdateCooldowns();
+        
+        // Optional: Bisa tambahkan logic untuk UI cooldown indicator
     }
 
     // Public getters for other components
@@ -209,4 +332,18 @@ public class PlayerMovement : MonoBehaviour
     
     // Method untuk akses komponen dodge
     public PlayerDodge GetPlayerDodge() => playerDodge;
+
+    // Method to apply throw cooldown upgrade
+    public void ApplyThrowCooldownUpgrade(float reduction)
+    {
+        throwCooldown = Mathf.Max(0.5f, baseThrowCooldown - reduction);
+        Debug.Log($"Throw cooldown reduced to: {throwCooldown}");
+    }
+
+    // Method to apply attack cooldown upgrade
+    public void ApplyAttackCooldownUpgrade(float reduction)
+    {
+        attackCooldown = Mathf.Max(0.2f, baseAttackCooldown - reduction);
+        Debug.Log($"Attack cooldown reduced to: {attackCooldown}");
+    }
 }
