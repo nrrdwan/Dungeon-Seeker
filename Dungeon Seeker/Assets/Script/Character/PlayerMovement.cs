@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -45,13 +46,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        // Jika kita sedang di scene MainMenu, langsung hancurkan player
+        if (SceneManager.GetActiveScene().name == "mainmenu")
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // Cek apakah sudah ada player lain di DontDestroyOnLoad
         GameObject[] existingPlayers = GameObject.FindGameObjectsWithTag("Player");
         
         if (existingPlayers.Length > 1)
         {
             Debug.Log("🔄 Menghapus player duplikat...");
-            // Hapus player yang bukan di DontDestroyOnLoad (player lama)
             foreach (GameObject player in existingPlayers)
             {
                 if (player != this.gameObject && player.scene.name != "DontDestroyOnLoad")
@@ -60,30 +67,40 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        
-        // Pindahkan player ini ke DontDestroyOnLoad jika belum
+
+        // Tetap hidup di antara scene
         if (transform.parent == null)
         {
             DontDestroyOnLoad(this.gameObject);
         }
-        
-        // Get reference for rigidbody from object
+
+        // Lanjutkan inisialisasi
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
-        // Store the original scale of the character
         originalScale = transform.localScale;
         startPosition = transform.position;
-        
-        // Configure rigidbody
         ConfigureRigidbody();
-        
-        // Initialize components
         InitializeComponents();
-
-        // Store base cooldown values
         baseThrowCooldown = throwCooldown;
         baseAttackCooldown = attackCooldown;
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "mainmenu")
+        {
+            Debug.Log("🧹 MainMenu terdeteksi, player dihancurkan.");
+            Destroy(gameObject);
+        }
     }
 
     void Start()

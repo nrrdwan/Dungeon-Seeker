@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/mainmenu.unity
+    guid: 07b5efd443b80b8419a7055740bf9624
+  - enabled: 1
+    path: Assets/Scenes/upgrade.unity
+    guid: 1a7b75cf4eb2adc418e2291e5ec33b1d
+  - enabled: 1
+    path: Assets/Scenes/credit.unity
+    guid: 42046564365216d43bf4303acb31e316
+  - enabled: 1
+    path: Assets/Scenes/pilihlevel.unity
+    guid: 5a8a914f28628ce4e92a258cc58c5eaf
+  - enabled: 1
     path: Assets/Scenes/level1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -14,16 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/level3.unity
     guid: 188a42d40c0a0b5409db6412a8344f92
-  - enabled: 1
-    path: Assets/Scenes/mainmenu.unity
-    guid: 07b5efd443b80b8419a7055740bf9624
-  - enabled: 1
-    path: Assets/Scenes/credit.unity
-    guid: 609b44125b30e8c4fafed95f0d8ee87d
-  - enabled: 1
-    path: Assets/Scenes/pilihlevel.unity
-    guid: 5a8a914f28628ce4e92a258cc58c5eaf
-  - enabled: 1
-    path: Assets/Scenes/upgrade.unity
-    guid: 1a7b75cf4eb2adc418e2291e5ec33b1d
   m_configObjects: {}
