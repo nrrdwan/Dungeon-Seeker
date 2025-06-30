@@ -111,6 +111,19 @@ public class PlayerCombat : MonoBehaviour
                     Debug.Log($"Hit BOS {enemy.name} with combo {currentCombo}!");
                 }
             }
+            
+            if (!hitProcessed)
+            {
+                var bossHealth = enemy.GetComponent<SistemNyawaBos>(); // atau SistemNyawaBos
+                if (bossHealth != null)
+                {
+                    for (int i = 0; i < currentCombo; i++)
+                        bossHealth.KurangiNyawa();
+
+                    hitProcessed = true;
+                    Debug.Log($"Hit BOS {enemy.name} with combo {currentCombo}!");
+                }
+            }
 
             // Tambah efek knockback kalau ada Rigidbody
             if (hitProcessed)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthBoss2 : MonoBehaviour
@@ -13,9 +11,12 @@ public class HealthBoss2 : MonoBehaviour
     private Animator animator;
     private bool sudahMati = false;
 
+    [Header("UI Health Bar")]
+    public HealthBar healthBar;  // 💡 Tambahkan komponen ini di Inspector
+
     [Header("Prefab Item Drop")]
     public GameObject prefabHati;
-    public GameObject prefabCrystal; // 🔥 Crystal saat bos mati
+    public GameObject prefabCrystal;
 
     [Header("Portal")]
     public GameObject portalSaatBosMati;
@@ -29,7 +30,12 @@ public class HealthBoss2 : MonoBehaviour
         nyawaSebelumnya = nyawaMaksimum;
         animator = GetComponent<Animator>();
 
-        // 🚪 Matikan portal di awal game
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(nyawaSekarang, nyawaMaksimum);
+            healthBar.target = transform; // agar health bar ikut posisi bos
+        }
+
         if (portalSaatBosMati != null)
         {
             portalSaatBosMati.SetActive(false);
@@ -44,17 +50,25 @@ public class HealthBoss2 : MonoBehaviour
         nyawaSekarang = Mathf.Max(0, nyawaSekarang);
         Debug.Log("Bos2 kena! Sisa nyawa: " + nyawaSekarang);
 
-        // Drop heart setiap 10 nyawa berkurang
-        if (nyawaSekarang % 10 == 0 && nyawaSebelumnya % 10 != 0)
+        // Perbaikan logika: drop item hati setiap nyawa berkurang kelipatan 10
+        // Misalnya: 90, 80, 70, 60, 50, 40, 30, 20, 10
+        if (nyawaSekarang > 0 && nyawaSekarang % 10 == 0)
         {
             DropItem(prefabHati);
+            Debug.Log($"💖 Item hati dijatuhkan saat nyawa tersisa {nyawaSekarang}!");
         }
 
         nyawaSebelumnya = nyawaSekarang;
 
         if (animator != null)
         {
-            animator.SetTrigger("hurt");
+            animator.SetTrigger(HurtParam);
+        }
+
+        // 🩸 Update UI HealthBar
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(nyawaSekarang, nyawaMaksimum);
         }
 
         if (nyawaSekarang <= 0)
@@ -71,9 +85,9 @@ public class HealthBoss2 : MonoBehaviour
 
         for (int i = 0; i < jumlah; i++)
         {
-            Vector3 posisiSpawn = basePos + new Vector3(0f, 0f, 0f);
+            Vector3 posisiSpawn = basePos; // Bisa dikembangkan jadi berjejer
             Instantiate(prefab, posisiSpawn, Quaternion.identity);
-            Debug.Log($"💖 Heart dropped di posisi {posisiSpawn}");
+            Debug.Log($"💖 Item dropped di posisi {posisiSpawn}");
         }
     }
 
@@ -85,14 +99,13 @@ public class HealthBoss2 : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isDead", true);
-            animator.SetTrigger("die");
+            animator.SetTrigger(DieParam);
         }
 
-        // Matikan physics dan collider
-        Collider2D[] colliders = GetComponents<Collider2D>();
-        foreach (Collider2D collider in colliders)
+        // Matikan collider dan physics
+        foreach (Collider2D col in GetComponents<Collider2D>())
         {
-            collider.enabled = false;
+            col.enabled = false;
         }
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -101,22 +114,21 @@ public class HealthBoss2 : MonoBehaviour
             rb.simulated = false;
         }
 
-        // ✅ Aktifkan portal
         if (portalSaatBosMati != null)
         {
             portalSaatBosMati.SetActive(true);
         }
 
-        // 💎 Drop crystal di tengah bos
         if (prefabCrystal != null)
         {
             Vector3 posisiSpawn = transform.position + Vector3.up * 1f;
             Instantiate(prefabCrystal, posisiSpawn, Quaternion.identity);
             Debug.Log("💎 Crystal dijatuhkan saat bos mati!");
         }
+
+        Invoke(nameof(Hancurkan), 1.3f);
     }
 
-    // Fungsi ini akan dipanggil lewat Animation Event di akhir animasi mati
     public void Hancurkan()
     {
         Destroy(gameObject);

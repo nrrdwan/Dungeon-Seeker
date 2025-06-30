@@ -7,6 +7,7 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private float dodgeForce = 10f;
     [SerializeField] private float dodgeDuration = 0.3f;
     [SerializeField] private float dodgeCooldown = 1f;
+    [SerializeField] private float baseDodgeCooldown = 1f; // Base cooldown value
     
     [Header("Invincibility")]
     [SerializeField] private float invincibilityDuration = 0.5f;
@@ -30,6 +31,16 @@ public class PlayerDodge : MonoBehaviour
         body = rigidBody;
         anim = animator;
         groundDetection = detection;
+        
+        // Store base cooldown value
+        baseDodgeCooldown = dodgeCooldown;
+    }
+
+    // Method to apply dodge cooldown upgrade
+    public void ApplyDodgeCooldownUpgrade(float reduction)
+    {
+        dodgeCooldown = Mathf.Max(0.1f, baseDodgeCooldown - reduction);
+        Debug.Log($"Dodge cooldown reduced to: {dodgeCooldown}");
     }
 
     public void HandleDodgeInput()
@@ -226,4 +237,12 @@ public class PlayerDodge : MonoBehaviour
     public bool IsInvincible() => isInvincible;
     public bool CanDodge() => canDodge;
     public float GetDodgeCooldownProgress() => (Time.time - lastDodgeTime) / dodgeCooldown;
+
+    void Start()
+    {
+        if (PlayerStatTracker.Instance != null)
+        {
+            dodgeCooldown = PlayerStatTracker.Instance.dodgeCooldown;
+        }
+    }
 }
